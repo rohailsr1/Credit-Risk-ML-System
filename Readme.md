@@ -94,7 +94,7 @@ class LoanApplication(BaseModel):
 
 1. **Auto-Calculated Ratios:**
 
-   $$ \text{Loan Percent Income} = \frac{\text{loan\_amnt}}{\text{person\_income}} $$
+Loan Percent Income = Loan amnt / person income 
 
 2. **Categorical Encoding:** One-Hot and Ordinal encoding applied to `person_home_ownership` (`RENT`, `MORTGAGE`, `OWN`, `OTHER`), `loan_intent` (`PERSONAL`, `EDUCATION`, `MEDICAL`, `VENTURE`, `HOMEIMPROVEMENT`, `DEBTCONSOLIDATION`), `loan_grade` (`A` to `F`), and `cb_person_default_on_file` (`Y`/`N`).
 
