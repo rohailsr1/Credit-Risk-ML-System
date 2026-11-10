@@ -1,11 +1,13 @@
 # 🛡️ Credit Risk Assessment Engine | Machine Learning & FastAPI
 
+[![Live App](https://img.shields.io/badge/Render-Live%20Demo-46E3B7?logo=render&logoColor=white)](https://credit-risk-ml-system-1g3x.onrender.com/)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-Framework-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
-[![XGBoost](https://img.shields.io/badge/XGBoost-Classification-111111?logo=xgboost)](https://xgboost.readthedocs.io/)
-[![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas)](https://pandas.pydata.org/)
-[![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-Machine%20Learning-F7931E?logo=scikit-learn)](https://scikit-learn.org/)
-[![Render](https://img.shields.io/badge/Render-Deployment-46E3B7?logo=render)](https://render.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-Classification-150458)](https://xgboost.readthedocs.io/)
+[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Machine%20Learning-F7931E?logo=scikit-learn)](https://scikit-learn.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-Glassmorphism-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+
+🚀 **Live Interactive Web Application:** [https://credit-risk-ml-system-1g3x.onrender.com/](https://credit-risk-ml-system-1g3x.onrender.com/)
 
 ---
 
@@ -45,10 +47,6 @@ The ratio of requested loan amount to annual income (`loan_percent_income`) prov
 - Low Risk Applicants: Average Loan-to-Income Ratio $\approx \mathbf{0.14}$ ($14\%$).
 - Defaulted Applicants: Average Loan-to-Income Ratio $> \mathbf{0.38}$ ($38\%+$).
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/placeholder/credit-risk/main/Images/loan_percent_income_dist.png" width="850" alt="Loan Percent Income Distribution">
-</p>
-
 ### Insight
 
 Applicants requesting loan amounts exceeding $35\%-40\%$ of their annual salary exhibited exponentially higher default probabilities, regardless of employment length.
@@ -62,7 +60,7 @@ The relationship between historical credit bureau default flags (`cb_person_defa
 | Prior Default Flag (`cb_person_default_on_file`) | Observed Default Rate | Default Risk Category |
 |---|---|---|
 | **No Flag (`N`)** | $14.2\%$ | Low / Moderate Risk |
-| **Default Flagged (`Y`)** | **$71.8\%$** | High Risk Flagged |
+| **Default Flagged (`Y`)** | $71.8\%$ | High Risk Flagged |
 
 ### Insight
 
@@ -112,8 +110,13 @@ class LoanApplication(BaseModel):
 ### Feature Engineering & Transformation Steps
 
 1. **Auto-Calculated Ratios:**
-   $$\text{Loan Percent Income} = \frac{\text{loan\_amnt}}{\text{person\_income}}$$
+
+   $$
+   \text{Loan Percent Income} = \frac{\text{loan\_amnt}}{\text{person\_income}}
+   $$
+
 2. **Categorical Encoding:** One-Hot and Ordinal encoding applied to `person_home_ownership` (`RENT`, `MORTGAGE`, `OWN`, `OTHER`), `loan_intent` (`PERSONAL`, `EDUCATION`, `MEDICAL`, `VENTURE`, `HOMEIMPROVEMENT`, `DEBTCONSOLIDATION`), `loan_grade` (`A` to `F`), and `cb_person_default_on_file` (`Y`/`N`).
+
 3. **Data Type Serialization Fix:** Explicit casting of NumPy data types (`numpy.float32`, `numpy.int64`) to Python primitives (`float`, `int`) to prevent FastAPI JSON response serialization exceptions.
 
 ---
@@ -123,19 +126,21 @@ class LoanApplication(BaseModel):
 Multiple binary classification algorithms were evaluated to determine the best model for predicting default risk ($1 = \text{Default/High Risk}, 0 = \text{Non-Default/Low Risk}$).
 
 | Algorithm | Precision | Recall | F1-Score | ROC-AUC |
-|---|---:|---:|---:|---:|
+|---|---|---|---|---|
 | Logistic Regression | $0.72$ | $0.54$ | $0.62$ | $0.76$ |
 | Random Forest Classifier | $0.88$ | $0.71$ | $0.79$ | $0.91$ |
 | LightGBM Classifier | $0.90$ | $0.75$ | $0.82$ | $0.93$ |
-| **Tuned XGBoost Classifier** | **$0.92$** | **$0.79$** | **$0.85$** | **$0.948$** |
+| **Tuned XGBoost Classifier** | $0.92$ | $0.79$ | $0.85$ | **$0.948$** |
 
 ### Decision Threshold Optimization
 
-In credit underwriting, **false negatives** (approving a high-risk borrower who defaults) are significantly costlier than **false positives** (rejecting a safe borrower). 
+In credit underwriting, **false negatives** (approving a high-risk borrower who defaults) are significantly costlier than **false positives** (rejecting a safe borrower).
 
 Rather than using a default binary threshold of $0.50$, an optimal decision threshold ($\approx 0.35 - 0.42$) was calculated using the Precision-Recall curve to optimize the F1-Score and maximize default detection.
 
-$$\text{Prediction Status} = \begin{cases} 1 \quad (\text{High Risk}), & \text{if } P(\text{Default}) \ge \text{Threshold} \\ 0 \quad (\text{Low Risk}), & \text{if } P(\text{Default}) < \text{Threshold} \end{cases}$$
+$$
+\text{Prediction Status} = \begin{cases} 1 \quad (\text{High Risk}), & \text{if } P(\text{Default}) \ge \text{Threshold} \\ 0 \quad (\text{Low Risk}), & \text{if } P(\text{Default}) < \text{Threshold} \end{cases}
+$$
 
 ---
 
@@ -166,12 +171,14 @@ The system is delivered as a lightweight, single-service web application built w
 # 🚀 How to Run Locally
 
 ## 1. Clone the Repository
+
 ```bash
 git clone https://github.com/your-username/credit-risk-ml-system.git
 cd credit-risk-ml-system
 ```
 
 ## 2. Set Up Virtual Environment & Dependencies
+
 ```bash
 # Create environment
 python -m venv venv
@@ -186,11 +193,13 @@ pip install -r requirements.txt
 ```
 
 ## 3. Launch the Server
+
 ```bash
 uvicorn app:app --reload
 ```
 
 ## 4. Access the App
+
 Open your browser and navigate to:
 👉 **`http://127.0.0.1:8000/`**
 
@@ -201,18 +210,20 @@ To view auto-generated Swagger API documentation, visit:
 
 # 🌐 Cloud Deployment (Render)
 
-The project is pre-configured for automated deployment on **Render**:
+The project is deployed on **Render**:
+
+🔗 **Live URL:** [https://credit-risk-ml-system-1g3x.onrender.com/](https://credit-risk-ml-system-1g3x.onrender.com/)
 
 1. **Procfile:** Contains the production web server start command:
    ```text
    web: uvicorn app:app --host 0.0.0.0 --port $PORT
    ```
 2. **runtime.txt:** Pins Python execution version (`python-3.11.9`).
-3. Connect your GitHub repository to Render as a **Web Service** and deploy directly!
 
 ---
 
 # 👨‍💻 Author
 
-**Muhammad Rohail**  
+**Muhammad Rohail**
+
 *Data Analyst | Machine Learning & Business Intelligence*
