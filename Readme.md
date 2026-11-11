@@ -6,11 +6,15 @@
 [![XGBoost](https://img.shields.io/badge/XGBoost-Classification-189E79)](https://xgboost.readthedocs.io/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![SHAP](https://img.shields.io/badge/SHAP-Explainability-7952B3)](https://shap.readthedocs.io/)
-[![APP](https://credit-risk-ml-system-1g3x.onrender.com/)
 
 A complete machine learning project that analyzes consumer loan applications, identifies applicants with a higher likelihood of default, and serves predictions through a **FastAPI backend** and a custom web interface.
 
 ---
+## 🌐 Live Application
+
+Try the deployed application here:
+
+### [🚀 Credit Ledger — Loan Risk Assessment](https://credit-risk-ml-system-1g3x.onrender.com/)
 
 # 🎯 Business Problem
 
